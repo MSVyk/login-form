@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 
 export default function LoginWindow(
   { setUpProfile }: {
@@ -8,33 +8,23 @@ export default function LoginWindow(
   }
 ) {
 
-  /* 
-    TODO #1: Add a state variable to store the current error message
-  */
+  const [error, setError] = useState<string>('');
 
-  /*
-    This function is called to set up the profile of the new user. It is called
-    when a user submits the login form. It takes a FormData object as an argument,
-    which contains the username and name of the new user.
-    @param form - FormData object containing the username and name of the new user
-  */
-  const onSubmit = async (form: FormData) => {
-    /* 
-      TODO #3: Set the error state to an empty string
-    */
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 
-    /* 
-      TODO #4: Set up a try catch block to call the setUpProfile() function and set the error state
-      if an error is thrown
+      setError('');
 
-      HINT: 
-        - Use the setUpProfile() function to set up the user's profile and log them in
-        - In the catch block, set the error state to the error message (error.message)
-    */
-  }
+      try {
+        const formData = new FormData(e.currentTarget as HTMLFormElement);
+        await setUpProfile(formData);
+
+      } catch (error) {
+        setError((error as Error).message || 'An error occurred while creating the account.');
+      }
+    };
 
   return (
-    <form action={onSubmit} >
+    <form onSubmit={onSubmit} >
       <div className='flex flex-col space-y-3'>
         <p className='text-xs font-bold uppercase text-neutral-100'>
           Create Account
@@ -63,11 +53,8 @@ export default function LoginWindow(
             Create Account
           </button>
           <p className="text-red-500">
-            {/* 
-              TODO #2: Display the error message if it is not an empty string using the error state variable
-            */}
             {
-              "PLACEHOLDER"
+              error && error
             }
           </p>
         </div>

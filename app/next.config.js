@@ -1,12 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    MODULE_ADDRESS: process.env.MODULE_ADDRESS,
-    MODULE_NAME: process.env.MODULE_NAME,
-    FUNDING_ACCOUNT_PRIVATE_KEY: process.env.FUNDING_ACCOUNT_PRIVATE_KEY,
-  },
-  experimental: {
-    serverActions: true,
+    MODULE_ADDRESS: process.env.MODULE_ADDRESS || '',
+    MODULE_NAME: process.env.MODULE_NAME || '',
+    FUNDING_ACCOUNT_PRIVATE_KEY: process.env.FUNDING_ACCOUNT_PRIVATE_KEY || '',
   },
   images: {
     remotePatterns: [
